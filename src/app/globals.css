@@ -1,0 +1,44 @@
+@import '../styles/variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-text-dark;
+}
+
+.hero-background-motion {
+  transform-origin: 80% 45%;
+  animation: hero-background-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes hero-background-drift {
+  from {
+    transform: scale(1.02) translateX(0);
+  }
+  to {
+    transform: scale(1.09) translateX(-0.6%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-motion {
+    animation: none;
+    transform: none;
+  }
+}
+
+a {
+  @apply text-navy hover:text-navy/80 transition-colors duration-200;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
