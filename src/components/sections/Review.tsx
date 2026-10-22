@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { reviews, type ReviewTag } from '@/data/reviews';
+import { isSampleReviews, reviews, type ReviewTag } from '@/data/reviews';
 import Card from '@/components/common/Card';
 import BrandLogo from '@/components/common/BrandLogo';
 
@@ -105,6 +105,12 @@ export default function Review({ variant = 'carousel' }: ReviewProps) {
           <div className="text-center mb-12">
             <h2 className="text-h2 mb-4">고객이 남긴 후기</h2>
           </div>
+        )}
+
+        {isSampleReviews && (
+          <p className="text-center text-[18px] text-text-muted mb-8">
+            아래 후기는 디자인 확인용 샘플이며 실제 고객 후기가 아닙니다.
+          </p>
         )}
 
         <div className="relative">
