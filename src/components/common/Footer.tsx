@@ -65,6 +65,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-white/10 pt-8 text-center text-sm text-white/60">
           <p>Copyright 2026 {company.name}. All rights reserved.</p>
+          <p className="mt-2">가상 브랜드 데모 사이트입니다.</p>
         </div>
       </div>
     </footer>
