@@ -26,8 +26,9 @@ export default function Hero() {
         className="object-cover object-[85%_center] md:object-center"
         quality={85}
       />
-      <div className="absolute inset-0 bg-navy/35 md:bg-navy/5" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-r from-navy/70 via-navy/30 to-transparent" aria-hidden="true" />
+      <div className="absolute inset-0 bg-navy/35 md:bg-transparent" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy/80 via-navy/40 to-transparent" aria-hidden="true" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-navy/60 to-transparent" aria-hidden="true" />
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
