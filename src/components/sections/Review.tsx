@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { reviews, type ReviewTag } from '@/data/reviews';
 import Card from '@/components/common/Card';
+import BrandLogo from '@/components/common/BrandLogo';
 
 const tagLabels: Record<ReviewTag, string> = {
   maintenance: '정기 관리',
@@ -107,6 +108,16 @@ export default function Review({ variant = 'carousel' }: ReviewProps) {
         )}
 
         <div className="relative">
+          {!isCarousel && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
+            >
+              <div className="scale-[2.5] opacity-[0.07]">
+                <BrandLogo size="lg" />
+              </div>
+            </div>
+          )}
           <div ref={trackRef} className={listClass}>
             {visibleReviews.map((review) => {
               const meta = [`${review.initial ?? '○○○'} 대표님`, review.region, review.size].filter(Boolean);
