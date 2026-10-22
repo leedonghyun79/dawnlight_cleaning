@@ -56,7 +56,7 @@ function CountUp({ value, duration = 1600 }: { value: string; duration?: number 
   }, [value, duration]);
 
   return (
-    <dt ref={ref} className="text-3xl md:text-5xl font-bold text-navy tabular-nums">
+    <dt ref={ref} className="text-4xl md:text-6xl font-bold text-white tabular-nums">
       {display}
     </dt>
   );
@@ -64,13 +64,13 @@ function CountUp({ value, duration = 1600 }: { value: string; duration?: number 
 
 export default function StatsBand() {
   return (
-    <section className="bg-white border-b border-border py-20 md:py-24">
+    <section className="bg-navy py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <dl className="grid grid-cols-3 gap-4 md:gap-8 text-center">
           {stats.map((stat) => (
             <div key={stat.label}>
               <CountUp value={stat.value} />
-              <dd className="text-base text-text-muted mt-3">{stat.label}</dd>
+              <dd className="text-base text-sky mt-3">{stat.label}</dd>
             </div>
           ))}
         </dl>

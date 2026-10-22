@@ -19,7 +19,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact-page" className="py-20 bg-white">
+    <section id="contact-page" className="py-24 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         {/* Intro */}
         <div className="lg:sticky lg:top-32">

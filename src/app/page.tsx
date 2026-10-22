@@ -8,7 +8,6 @@ import PortfolioPreview from "@/components/sections/PortfolioPreview";
 import Review from "@/components/sections/Review";
 import FaqPreview from "@/components/sections/FaqPreview";
 import CTA from "@/components/sections/CTA";
-import Location from "@/components/sections/Location";
 
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
       <Review />
       <FaqPreview />
       <CTA />
-      <Location />
     </>
   );
 }

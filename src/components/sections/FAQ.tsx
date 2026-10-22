@@ -4,7 +4,7 @@ import { faqs } from '@/data/faqs';
 
 export default function FAQ() {
   return (
-    <section id="faq" className="py-20 bg-sky">
+    <section id="faq" className="py-24 md:py-32 bg-sky">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-h2 mb-8">맡기기 전에 자주 묻는 질문</h2>

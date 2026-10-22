@@ -43,42 +43,19 @@ export default function Footer() {
 
           {/* SNS & Legal */}
           <div>
-            <h4 className="font-semibold mb-4">연결</h4>
-            <div className="flex gap-4 mb-8">
-              <a
-                href={company.socialLinks.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/80 hover:text-white transition-colors"
-              >
-                Facebook
-              </a>
-              <a
-                href={company.socialLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/80 hover:text-white transition-colors"
-              >
-                Instagram
-              </a>
-              <a
-                href={company.socialLinks.naver}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/80 hover:text-white transition-colors"
-              >
-                Naver
-              </a>
+            <h4 className="font-semibold mb-4">
+              링크
+            </h4>
+            <div className="flex gap-4 mb-8 text-white/80">
+              <span>Facebook</span>
+              <span>Instagram</span>
+              <span>Naver</span>
             </div>
             <div className="text-xs space-y-1 text-white/60">
               <p>
-                <a href="#" className="text-white/60 hover:text-white transition-colors">
-                  이용약관
-                </a>
+                <span>이용약관</span>
                 {' · '}
-                <a href="#" className="text-white/60 hover:text-white transition-colors">
-                  개인정보처리방침
-                </a>
+                <span>개인정보처리방침</span>
               </p>
               <p>사업자등록번호: {company.businessRegistration}</p>
             </div>

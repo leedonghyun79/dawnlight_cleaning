@@ -37,7 +37,8 @@ export default function Hero() {
             마음이 가벼워집니다
           </h1>
           <p className="text-xl md:text-2xl leading-relaxed text-white/90 mb-10 break-keep text-balance">
-            누적 12,000건의 공간을 정돈해 온 새벽빛 청소가 고객님의 공간도 끝까지 책임집니다.
+            누적 12,000건의 공간을 정돈해 왔습니다. 집이든 사무실이든 공사 현장이든, 맡겨 주신 공간을
+            정해진 기준에 맞춰 끝까지 챙깁니다. 맡긴 뒤 걱정할 일이 없도록요.
           </p>
 
           {/* Buttons */}

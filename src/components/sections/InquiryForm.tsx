@@ -8,6 +8,13 @@ const spaceTypes = ['입주·이사', '거주 공간', '사무실·상업 공간
 const fieldClass =
   'w-full rounded-md border border-border px-4 py-3 text-text-dark focus:outline-none focus:border-navy';
 
+// 로컬 기준 오늘 날짜를 YYYY-MM-DD 형식으로 돌려준다 (date 입력칸 기본값용)
+function todayIso() {
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  return new Date(now.getTime() - offset).toISOString().slice(0, 10);
+}
+
 export default function InquiryForm() {
   const [agreed, setAgreed] = useState(false);
 
@@ -63,7 +70,7 @@ export default function InquiryForm() {
         </label>
         <label className="block">
           <span className="block text-[18px] font-semibold mb-2">희망 일정</span>
-          <input name="date" placeholder="예: 11월 중순 오전" className={fieldClass} />
+          <input type="date" name="date" defaultValue={todayIso()} className={fieldClass} />
         </label>
       </div>
 
@@ -86,11 +93,10 @@ export default function InquiryForm() {
       <button
         type="submit"
         disabled={!agreed}
-        className="w-full px-8 py-4 bg-navy text-white rounded-md font-semibold hover:bg-navy/90 transition-colors disabled:bg-navy/40 disabled:cursor-not-allowed"
+        className="w-full px-8 py-5 bg-navy text-white rounded-md text-[20px] font-bold hover:bg-navy/90 transition-colors disabled:bg-navy/40 disabled:cursor-not-allowed"
       >
-        메일로 견적 문의 보내기
+        견적 문의하기
       </button>
-      <p className="text-[18px] text-text-muted">버튼을 누르면 메일 앱이 열리고, 입력한 내용이 미리 채워집니다.</p>
     </form>
   );
 }

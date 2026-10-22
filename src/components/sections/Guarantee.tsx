@@ -23,7 +23,7 @@ const icons = [
 ];
 
 // 아이콘마다 다른 색을 줘서 네 항목이 구분되도록 한다
-const iconColors = ['text-[#1E3A5F]', 'text-[#2E7D8C]', 'text-[#4A7DB8]', 'text-[#C47F2C]'];
+const iconColors = ['text-navy', 'text-navy', 'text-navy', 'text-navy'];
 
 export default function Guarantee() {
   const reasons = [
@@ -36,8 +36,8 @@ export default function Guarantee() {
       description: '공간 유형, 면적, 오염도를 확인한 뒤 산정하고, 추가 비용은 작업 전에 먼저 알려드려요.',
     },
     {
-      title: '재청소 보장',
-      description: '작업 결과가 기준에 미치지 못하면 재청소로 보완해 드려요.',
+      title: '사후 A/S 보장',
+      description: '작업 후 미흡한 부분이 있으면 확인 뒤 재방문해 보완해 드려요.',
     },
     {
       title: '배상보험 가입',
@@ -46,34 +46,35 @@ export default function Guarantee() {
   ];
 
   return (
-    <section id="guarantee" className="py-20 bg-white">
+    <section id="guarantee" className="py-24 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <p className="text-sm font-bold tracking-widest text-navy mb-3">WHY US</p>
           <h2 className="text-h2 mb-4">새벽빛 청소를 선택해야 할 이유</h2>
-          <p className="text-text-muted">맡기기 전에 드는 걱정, 네 가지로 덜어 드립니다.</p>
+          <p className="text-[18px] text-text-muted">맡기기 전에 드는 걱정, 네 가지로 덜어 드립니다.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {reasons.map((reason, idx) => (
             <div
               key={reason.title}
-              className="bg-sky rounded-br-[80px] shadow-md p-10 text-center flex flex-col items-center"
+              className="bg-sky text-text-dark rounded-lg p-10 text-center flex flex-col items-center"
             >
-              <svg
-                viewBox="0 0 24 24"
-                className={`w-14 h-14 mb-8 ${iconColors[idx]}`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.6}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                {icons[idx]}
-              </svg>
+              <div className="flex items-center justify-center w-20 h-20 mb-8 rounded-full bg-white">
+                <svg
+                  viewBox="0 0 24 24"
+                  className={`w-10 h-10 ${iconColors[idx]}`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  {icons[idx]}
+                </svg>
+              </div>
               <h3 className="text-h4 mb-3">{reason.title}</h3>
-              <p className="text-sm text-text-muted leading-relaxed break-keep">{reason.description}</p>
+              <p className="text-[18px] text-text-muted leading-relaxed break-keep">{reason.description}</p>
             </div>
           ))}
         </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { reviews, reviewStats, type ReviewTag } from '@/data/reviews';
+import { reviews, type ReviewTag } from '@/data/reviews';
 import Card from '@/components/common/Card';
 
 const tagLabels: Record<ReviewTag, string> = {
@@ -22,51 +22,25 @@ function Stars({ rating }: { rating: number }) {
 }
 
 interface ReviewProps {
-  // 수치 띠는 홈 히어로 아래에 이미 있으므로 기본은 숨긴다. /review 페이지에서만 켠다.
-  showStats?: boolean;
+  // carousel: 홈에서 가로로 넘기는 방식. grid: 고객후기 페이지에서 3열로 전부 보여주는 방식.
+  variant?: 'carousel' | 'grid';
 }
 
-export default function Review({ showStats = false }: ReviewProps) {
-  const [displayedStats, setDisplayedStats] = useState({
-    satisfaction: 0,
-    totalServices: 0,
-    reuseRate: 0,
-  });
+const GRID_PAGE_SIZE = 8;
+
+export default function Review({ variant = 'carousel' }: ReviewProps) {
   const trackRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!showStats) return;
-
-    const animateCounter = (target: number, key: keyof typeof displayedStats, duration = 1500) => {
-      const startTime = Date.now();
-
-      const animate = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const current = Math.floor((target - 0) * progress);
-
-        setDisplayedStats((prev) => ({
-          ...prev,
-          [key]: current,
-        }));
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-
-      animate();
-    };
-
-    animateCounter(reviewStats.satisfaction, 'satisfaction');
-    setTimeout(() => animateCounter(reviewStats.totalServices, 'totalServices'), 200);
-    setTimeout(() => animateCounter(reviewStats.reuseRate, 'reuseRate'), 400);
-  }, [showStats]);
+  const [page, setPage] = useState(1);
+  const isCarousel = variant === 'carousel';
+  const totalPages = Math.ceil(reviews.length / GRID_PAGE_SIZE);
+  const visibleReviews = isCarousel
+    ? reviews
+    : reviews.slice((page - 1) * GRID_PAGE_SIZE, page * GRID_PAGE_SIZE);
 
   // 5초마다 한 장씩 자동으로 넘긴다. 마우스·터치·포커스가 있으면 멈추고, 움직임 줄이기 설정이면 끈다.
   useEffect(() => {
     const track = trackRef.current;
-    if (!track || reviews.length < 2) return;
+    if (!isCarousel || !track || reviews.length < 2) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let paused = false;
@@ -105,7 +79,7 @@ export default function Review({ showStats = false }: ReviewProps) {
       track.removeEventListener('focusin', pause);
       track.removeEventListener('focusout', resume);
     };
-  }, []);
+  }, [isCarousel]);
 
   const scrollByCard = (direction: 1 | -1) => {
     const track = trackRef.current;
@@ -115,46 +89,33 @@ export default function Review({ showStats = false }: ReviewProps) {
     track.scrollBy({ left: direction * step, behavior: 'smooth' });
   };
 
-  return (
-    <section id="review" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-h2 mb-4">고객이 남긴 후기</h2>
-        </div>
+  const listClass = isCarousel
+    ? 'flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+    : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
 
-        {showStats && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-navy mb-2">{displayedStats.satisfaction}%</div>
-              <p className="text-[18px] text-text-muted">고객 만족도</p>
-            </div>
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-navy mb-2">
-                {displayedStats.totalServices.toLocaleString()}건
-              </div>
-              <p className="text-[18px] text-text-muted">누적 청소 건수</p>
-            </div>
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-navy mb-2">{displayedStats.reuseRate}%</div>
-              <p className="text-[18px] text-text-muted">재이용 의향</p>
-            </div>
+  const cardPosition = isCarousel
+    ? 'snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]'
+    : 'w-full';
+
+  return (
+    <section id="review" className="py-24 md:py-32 bg-sky">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {isCarousel && (
+          <div className="text-center mb-12">
+            <h2 className="text-h2 mb-4">고객이 남긴 후기</h2>
           </div>
         )}
 
-        {/* Review Carousel */}
         <div className="relative">
-          <div
-            ref={trackRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {reviews.map((review) => {
-              const meta = [review.initial && `${review.initial}님`, review.region, review.size].filter(Boolean);
+          <div ref={trackRef} className={listClass}>
+            {visibleReviews.map((review) => {
+              const meta = [`${review.initial ?? '○○○'} 대표님`, review.region, review.size].filter(Boolean);
 
               return (
                 <Card
                   key={review.id}
                   hover={false}
-                  className="group relative snap-start shrink-0 w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex flex-col overflow-hidden p-8 border-0 shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+                  className={`group relative ${cardPosition} flex flex-col overflow-hidden p-8 border-0 shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-300`}
                 >
                   <span
                     aria-hidden="true"
@@ -182,14 +143,32 @@ export default function Review({ showStats = false }: ReviewProps) {
                     {review.rating !== undefined && <Stars rating={review.rating} />}
                   </div>
                   <h3 className="relative text-[24px] font-bold mb-2">{review.title}</h3>
-                  {meta.length > 0 && <p className="relative text-[18px] text-text-muted mb-4">{meta.join(' · ')}</p>}
                   <p className="relative text-[18px] text-text-dark leading-relaxed">{review.content}</p>
+                  {meta.length > 0 && <p className="relative mt-auto pt-4 text-[18px] text-text-muted">{meta.join(' · ')}</p>}
                 </Card>
               );
             })}
           </div>
 
-          {reviews.length > 1 && (
+          {!isCarousel && totalPages > 1 && (
+            <nav aria-label="후기 페이지" className="flex justify-center gap-2 mt-12">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                <button
+                  key={num}
+                  type="button"
+                  onClick={() => setPage(num)}
+                  aria-current={page === num ? 'page' : undefined}
+                  className={`w-11 h-11 rounded-full font-semibold transition-colors ${
+                    page === num ? 'bg-navy text-white' : 'bg-white text-navy hover:bg-navy/10'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+            </nav>
+          )}
+
+          {isCarousel && reviews.length > 1 && (
             <div className="flex justify-center gap-3 mt-8">
               <button
                 type="button"

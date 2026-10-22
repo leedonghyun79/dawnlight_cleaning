@@ -17,7 +17,7 @@ export default function ReviewPage() {
         image="/images/hero-lounge.webp"
         imageAlt="깔끔하게 정돈된 라운지 공간"
       />
-      <Review showStats />
+      <Review variant="grid" />
     </>
   );
 }

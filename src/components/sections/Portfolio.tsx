@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { portfolio, type PortfolioCategory } from '@/data/portfolio';
-import Card from '@/components/common/Card';
 import Badge from '@/components/common/Badge';
 import Button from '@/components/common/Button';
 
@@ -23,10 +22,10 @@ export default function Portfolio() {
     activeTab === 'all' ? portfolio : portfolio.filter((item) => item.category === activeTab);
 
   return (
-    <section id="portfolio" className="py-20 bg-white">
+    <section id="portfolio" className="py-24 md:py-32 bg-gradient-to-br from-sky via-white to-sky">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-h2 mb-8">18평부터 800평까지, 실제 작업으로 증명합니다</h2>
+          <h2 className="text-h2 mb-4">18평부터 800평까지, 실제 작업으로 증명합니다</h2>
           <p className="text-[18px] text-text-muted">사진은 공간 이해를 돕기 위한 AI 생성 이미지입니다.</p>
         </div>
 
@@ -48,26 +47,28 @@ export default function Portfolio() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {filteredPortfolio.map((item) => (
-            <Card key={item.id}>
-              <div className="relative w-full aspect-[16/10] bg-sky overflow-hidden mb-5 rounded">
+            <article
+              key={item.id}
+              className="bg-white rounded-lg overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="relative w-full aspect-[16/10] bg-sky">
                 <Image
                   src={item.image}
                   alt={`${item.title} 공간 예시`}
                   fill
-                  sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1279px) 45vw, 560px"
+                  sizes="(max-width: 767px) 100vw, 560px"
                   className="object-cover"
                 />
               </div>
-
-              <h4 className="text-[24px] font-bold mb-2">{item.title}</h4>
-
-              <div className="flex gap-2 mb-4">
-                <Badge>{item.size}</Badge>
-                <Badge variant="secondary">{item.duration}</Badge>
+              <div className="p-6">
+                <h3 className="text-h4 mb-2">{item.title}</h3>
+                <p className="text-base text-text-muted leading-relaxed mb-4">{item.description}</p>
+                <div className="flex gap-2">
+                  <Badge>{item.size}</Badge>
+                  <Badge variant="secondary">{item.duration}</Badge>
+                </div>
               </div>
-
-              <p className="text-[18px] text-text-muted">{item.description}</p>
-            </Card>
+            </article>
           ))}
         </div>
 
