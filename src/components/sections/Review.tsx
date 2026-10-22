@@ -104,11 +104,14 @@ export default function Review({ variant = 'carousel' }: ReviewProps) {
         {isCarousel && (
           <div className="text-center mb-12">
             <h2 className="text-h2 mb-4">고객이 남긴 후기</h2>
+            {isSampleReviews && (
+              <p className="text-[18px] text-text-muted">아래 후기는 디자인 확인용 샘플이며 실제 고객 후기가 아닙니다.</p>
+            )}
           </div>
         )}
 
-        {isSampleReviews && (
-          <p className="text-center text-[18px] text-text-muted mb-8">
+        {!isCarousel && isSampleReviews && (
+          <p className="text-center text-[18px] text-text-muted mb-12">
             아래 후기는 디자인 확인용 샘플이며 실제 고객 후기가 아닙니다.
           </p>
         )}
